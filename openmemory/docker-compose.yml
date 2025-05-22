@@ -9,11 +9,9 @@ services:
     image: mem0/openmemory-mcp
     build: api/
     environment:
-      # Variáveis para o serviço API (openmemory-mcp)
-      USER: ${USER} # Puxa a variável USER do ambiente do EasyPanel
-      OPENAI_API_KEY: ${OPENAI_API_KEY} # Puxa a chave da OpenAI do ambiente do EasyPanel
-      # Se a API precisar saber sua própria URL ou alguma outra URL externa
-      # MEM0_API_URL: ${MEM0_API_URL} # Exemplo, adicione se necessário
+      - USER
+    env_file:
+      - api/.env
     depends_on:
       - mem0_store
     ports:
@@ -28,18 +26,10 @@ services:
       dockerfile: Dockerfile
     image: mem0/openmemory-ui:latest
     ports:
-      - "3001:3001"
+      - "3000:3000"
     environment:
-      # Variáveis para o serviço UI (openmemory-ui)
-      # NEXT_PUBLIC_API_URL deve apontar para a URL acessível da API
-      # Se a UI e a API estiverem na mesma rede Docker e a UI chamar a API internamente:
-      # NEXT_PUBLIC_API_URL: http://openmemory-mcp:8765
-      # Se a UI precisar da URL pública da API (como configurado no EasyPanel):
-      NEXT_PUBLIC_API_URL: ${PUBLIC_API_URL_FOR_UI} # Puxa a URL pública da API do EasyPanel
-      NEXT_PUBLIC_USER_ID: ${USER} # Puxa a variável USER do ambiente do EasyPanel
-    # Note: Se a UI precisa de NEXT_PUBLIC_OPENAI_API_KEY (menos comum para frontends), adicione:
-    # NEXT_PUBLIC_OPENAI_API_KEY: ${OPENAI_API_KEY}
-    # No entanto, geralmente a chave da OpenAI deve ficar apenas no backend (API).
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - NEXT_PUBLIC_USER_ID=${USER}
 
 volumes:
   mem0_storage:
