@@ -28,7 +28,7 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - NEXT_PUBLIC_API_URL=http://mcpopenmemo.necesser-app.com.br
+      - NEXT_PUBLIC_API_URL=http://mcpopenmemo.necesser-app.com.br:8765
       - NEXT_PUBLIC_USER_ID=edpinheiro
 
 volumes:
