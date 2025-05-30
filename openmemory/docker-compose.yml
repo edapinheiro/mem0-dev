@@ -10,6 +10,7 @@ services:
     build: api/
     environment:
       - USER
+      - API_KEY
     env_file:
       - api/.env
     depends_on:
@@ -26,10 +27,10 @@ services:
       dockerfile: Dockerfile
     image: mem0/openmemory-ui:latest
     ports:
-      - "3001:3001"
+      - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://mcpopenmemo.necesser-app.com.br:8765
-      - NEXT_PUBLIC_USER_ID=edpinheiro
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - NEXT_PUBLIC_USER_ID=${USER}
 
 volumes:
   mem0_storage:
