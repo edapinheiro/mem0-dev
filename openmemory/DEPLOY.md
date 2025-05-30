@@ -34,6 +34,7 @@ O `docker-compose.yml` foi corrigido para resolver os seguintes problemas:
 3. **Volume mapping removido**: Eliminado o mapeamento que sobrescrevia a imagem
 4. **Persistência de dados**: Volume separado para o banco SQLite
 5. **Configuração de produção**: Otimizada para ambientes de produção
+6. **Porta da UI**: Alterada para 3001 (mapeamento 3001:3000)
 
 ### Principais correções para o erro "Could not import module 'main'":
 
@@ -67,7 +68,7 @@ docker-compose down
 Após o deploy, verifique:
 
 1. API: `http://seu-dominio:8765/docs`
-2. UI: `http://seu-dominio:3000`
+2. UI: `http://seu-dominio:3001`
 3. Qdrant: `http://seu-dominio:6333`
 
 ## Troubleshooting
@@ -77,10 +78,11 @@ Se ainda houver problemas:
 1. Verifique se a OPENAI_API_KEY está configurada no Coolify
 2. Force rebuild: `docker-compose build --no-cache`
 3. Verifique os logs: `docker-compose logs openmemory-mcp`
-4. Confirme que as portas estão disponíveis
+4. Confirme que todas as portas estão disponíveis
 
 ## Notas Importantes
 
 - **Dados persistem**: O banco SQLite agora é salvo em volume separado
 - **Sem desenvolvimento**: Volumes de código removidos para produção
-- **Build otimizado**: Imagem usa o código construído, não mapeado 
+- **Build otimizado**: Imagem usa o código construído, não mapeado
+- **Porta da UI**: Acessível externamente na porta 3001 
