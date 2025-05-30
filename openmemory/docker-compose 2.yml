@@ -8,32 +8,28 @@ services:
   openmemory-mcp:
     image: mem0/openmemory-mcp
     build: api/
-    working_dir: /usr/src/openmemory
     environment:
-      - USER=${USER:-default_user}
-      - API_KEY=${OPENAI_API_KEY}
-      - PYTHONPATH=/usr/src/openmemory
-      - DATABASE_URL=sqlite:///./openmemory.db
-      - QDRANT_HOST=mem0_store
-      - QDRANT_PORT=6333
-      - ENV=production
+      - USER
+    env_file:
+      - api/.env
     depends_on:
       - mem0_store
     ports:
       - "8765:8765"
     volumes:
       - ./api:/usr/src/openmemory
-    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8765"]
+    command: >
+      sh -c "uvicorn main:app --host 0.0.0.0 --port 8765 --reload --workers 4"
   openmemory-ui:
     build:
       context: ui/
       dockerfile: Dockerfile
     image: mem0/openmemory-ui:latest
     ports:
-      - "3000:3000"
+      - "3001:3001"
     environment:
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-      - NEXT_PUBLIC_USER_ID=${NEXT_PUBLIC_USER_ID}
+      - NEXT_PUBLIC_API_URL=http://mcpopenmemo.necesser-app.com.br:8765
+      - NEXT_PUBLIC_USER_ID=edpinheiro
 
 volumes:
   mem0_storage:
