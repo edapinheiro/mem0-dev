@@ -8,9 +8,11 @@ services:
   openmemory-mcp:
     image: mem0/openmemory-mcp
     build: api/
+    working_dir: /usr/src/openmemory  
     environment:
       - USER
       - API_KEY
+      - PYTHONPATH=/usr/src/openmemory
     env_file:
       - api/.env
     depends_on:
@@ -20,7 +22,8 @@ services:
     volumes:
       - ./api:/usr/src/openmemory
     command: >
-      sh -c "uvicorn main:app --host 0.0.0.0 --port 8765 --reload --workers 4"
+      sh -c "uvicorn --app-dir /usr/src/openmemory main:app \
+              --host 0.0.0.0 --port 8765 --reload --workers 4"
   openmemory-ui:
     build:
       context: ui/
