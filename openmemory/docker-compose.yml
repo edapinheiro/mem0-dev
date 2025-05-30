@@ -8,12 +8,10 @@ services:
   openmemory-mcp:
     image: mem0/openmemory-mcp
     build: api/
-    working_dir: /usr/src/openmemory
     environment:
       - USER=${USER:-default_user}
       - API_KEY=${OPENAI_API_KEY}
-      - PYTHONPATH=/usr/src/openmemory
-      - DATABASE_URL=sqlite:///./openmemory.db
+      - DATABASE_URL=sqlite:////data/openmemory.db
       - QDRANT_HOST=mem0_store
       - QDRANT_PORT=6333
       - ENV=production
@@ -22,7 +20,7 @@ services:
     ports:
       - "8765:8765"
     volumes:
-      - ./api:/usr/src/openmemory
+      - openmemory_data:/data
     command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8765"]
   openmemory-ui:
     build:
@@ -37,3 +35,4 @@ services:
 
 volumes:
   mem0_storage:
+  openmemory_data:
