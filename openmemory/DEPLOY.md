@@ -34,7 +34,7 @@ O `docker-compose.yml` foi corrigido para resolver os seguintes problemas:
 3. **Volume mapping removido**: Eliminado o mapeamento que sobrescrevia a imagem
 4. **Persistência de dados**: Volume separado para o banco SQLite
 5. **Configuração de produção**: Otimizada para ambientes de produção
-6. **Porta da UI**: Alterada para 3001 (mapeamento 3001:3000)
+6. **Porta da UI**: Alterada para 3001 (container e host usam porta 3001)
 
 ### Principais correções para o erro "Could not import module 'main'":
 
@@ -85,4 +85,4 @@ Se ainda houver problemas:
 - **Dados persistem**: O banco SQLite agora é salvo em volume separado
 - **Sem desenvolvimento**: Volumes de código removidos para produção
 - **Build otimizado**: Imagem usa o código construído, não mapeado
-- **Porta da UI**: Acessível externamente na porta 3001 
+- **Porta da UI**: Container e host usam porta 3001 (mapeamento 3001:3001) 
